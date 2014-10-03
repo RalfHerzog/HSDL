@@ -30,7 +30,10 @@ int main(int argc, char **argv) {
 	if (argc != 3) {
 		f = stdin;
 	} else {
-		f = fopen( argv[2], "r" );
+		if( !(f = fopen( argv[2], "r" ) ) ) {
+			fprintf( stderr, "error: cannot open file %s\n", argv[2] );
+			return 1;
+		}
 	}
 	while(!feof(f)) {
 		len = fread(buffer + (BUFFSIZE - buffsize), 1, buffsize, f);
@@ -71,7 +74,7 @@ int main(int argc, char **argv) {
 	fclose(f);
 	
 //	parse_dom(doc);
-//	html_print_dom(html);
+//	html_print_dom(hsdl.html_doc);
 	
 	hsdl_generate( &hsdl );
 
